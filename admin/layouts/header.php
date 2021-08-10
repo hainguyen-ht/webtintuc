@@ -1,6 +1,6 @@
 <?php
-    require_once '../functions/function.php';
     session_start();
+    require_once '../functions/function.php';
     if(!isset($_SESSION['user_info'])){
         header("Location: ./login.php");
     }

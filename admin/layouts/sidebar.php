@@ -15,7 +15,7 @@
                 <img src="../assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="" class="d-block"><?= $_SESSION['user_info']['email'] ?></a>
+                <a href="./index.php" class="d-block"><?= $_SESSION['user_info']['email'] ?></a>
             </div>
         </div>
         <!-- Sidebar Menu -->
@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="./category/index.php" class="nav-link">
+                    <a href="./account.php" class="nav-link">
                         <p>PHÂN QUYỀN</p>
                     </a>
                 </li>

@@ -1,5 +1,6 @@
 <?php
 require_once './layouts/header.php';
+checkRole($_SESSION['user_info']['roles']);
 require_once './layouts/sidebar.php';
 ?>
 

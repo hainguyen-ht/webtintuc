@@ -1,5 +1,7 @@
 <?php
+    session_start();
     require_once '../functions/function.php';
+    checkRole($_SESSION['user_info']['roles']);
     $id = $_GET['id'] ?? '';
     if($id == ''){
         header("Location: ./category.php");

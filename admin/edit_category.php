@@ -1,5 +1,6 @@
 <?php
 require_once './layouts/header.php';
+checkRole($_SESSION['user_info']['roles']);
 require_once './layouts/sidebar.php';
 ?>
 <?php
@@ -23,6 +24,9 @@ require_once './layouts/sidebar.php';
         $updated_row = mysqli_affected_rows($conn);
         if($updated_row > 0){
             $message = 'Cập nhật thành công!';
+            echo "<script>alert('Cập nhật thành công!'); location.replace('./category.php')</script>";
+        }else{
+            $message = 'Cập nhật thất bại!';
         }
     }
 ?>

@@ -8,12 +8,12 @@ require_once './layouts/sidebar.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Quản lý bài viết</h1>
+                    <h1 class="m-0 text-dark">Phân quyền</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <?php if($_SESSION['user_info']['roles'] == 1){ ?>
-                        <li class="breadcrumb-item"><a href="./add_news.php">Thêm mới</a></li>
+                        <li class="breadcrumb-item"><a href="./add_account.php">Thêm tài khoản</a></li>
                         <?php } ?>
                     </ol>
                 </div>
@@ -26,39 +26,33 @@ require_once './layouts/sidebar.php';
                 <thead>
                 <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Tiêu đề tin</th>
-                    <th scope="col">Nội dung</th>
-                    <th scope="col">Danh mục</th>
-                    <th scope="col">Ảnh mô tả</th>
-                    <th scope="col">Ngày đăng</th>
-                    <th scope="col">Cập nhật</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Quyền</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col">Cập nhật lần cuối</th>
                     <th scope="col">Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                $sql = "SELECT * FROM `news` ORDER BY `updated_at` DESC, `id` DESC";
+                $sql = "SELECT * FROM `user` ORDER BY `updated_at` DESC, `id` DESC";
                 $result = mysqli_query($conn, $sql);
                 $i = 0;
                 while ($row = mysqli_fetch_assoc($result)){
                     ?>
                     <tr>
                         <th scope="row"><?= ++$i; ?></th>
-                        <td><?= replaceString($row['title'],6) ?></td>
-                        <td><?= replaceString($row['content'],8) ?></td>
-                        <td><?= $getCategory($row['category_id']) ?></td>
-                        <td>
-                            <img src="<?= ($row['image']) ? base_url().'/uploads/'.$row['image'] : 'Chưa có ảnh' ?>" width="70">
-                        </td>
+                        <td><?= $row['email'] ?></td>
+                        <td class="text-bold"><?= getRoles($row['roles']) ?></td>
                         <td><?= date("H:i:s d-m-Y",$row['created_at']) ?></td>
                         <td><?= ($row['updated_at']) ? date("H:i:s d-m-Y",$row['updated_at']) : 'Chưa cập nhật' ?></td>
                         <td>
-                        <?php if($_SESSION['user_info']['roles'] == 1){ ?>
-                            <a href="./edit_news.php?id=<?= $row['id'] ?>"><i class="fas fa-edit"></i></a>&emsp;
-                            <a href="./remove_news.php?id=<?= $row['id'] ?>" onclick="return confirm('Bạn muốn xoá tin này chứ?')"><i class="fas fa-trash text-red"></i></a>
+                        <?php if($_SESSION['user_info']['roles'] == 1 && $_SESSION['user_info']['email'] != $row['email']){ ?>
+                            <a href="./edit_account.php?id=<?= $row['id'] ?>"><i class="fas fa-edit"></i></a>&emsp;
+                            <a href="./remove_account.php.php?id=<?= $row['id'] ?>" onclick="return confirm('Bạn muốn xoá tài khoản này chứ?')"><i class="fas fa-trash text-red"></i></a>
                         <?php }else{ ?>
-                                <label><i class="fas fa-edit"></i></label>
-                                <label><i class="fas fa-trash"></i></label>
+                            <label><i class="fas fa-edit"></i></label>&emsp;
+                            <label><i class="fas fa-trash"></i></label>
                         <?php } ?>
                         </td>
                     </tr>
